@@ -9,4 +9,26 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    public void updatePayment(){
+        System.out.println("=============================================");
+        System.out.println("                     Update Payment");
+        System.out.println("=============================================");
+
+
+        PaymentDAO.updatePayment();
+    }
+    public void managePartialPayments(){
+        System.out.println("=============================================");
+        System.out.println("                     Remove Payment");
+        System.out.println("=============================================");
+
+
+        PaymentDAO.managePartialPayments();
+    }
+
+
+
+
+
 }
