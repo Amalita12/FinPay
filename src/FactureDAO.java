@@ -12,6 +12,7 @@ public class FactureDAO {
             ps.setDouble(3, montant);
             ps.setString(4, statut.name());
             ps.setDate(5, dateFacture);
+
             ps.executeUpdate();
             System.out.println("Facture added successfully!");
         } catch (SQLException e) { e.printStackTrace(); }
