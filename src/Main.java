@@ -59,12 +59,14 @@ public  class Main {
         System.out.println("=============================================");
         System.out.println("                     Ajouter Payment");
         System.out.println("=============================================");
-        System.out.println("Enter date");
-        String date = sc.nextLine();
-        System.out.println("enter paymenttype");
-        String type =  sc.nextLine();
+        System.out.println("Enter the id of the facture.");
+        int idFacture = sc.nextInt();
 
-        PaymentDAO.AjouterPayment();
+        Facture facture = Payment.getFacture();
+        double montantPaye = facture.getMontantPaye();
+        double commission = montantPaye * 0.02;
+
+        PaymentDAO.AjouterPayment( idFacture,  montantPaye,  commission);
     }
     public void displayPayment(){
         System.out.println("=============================================");
