@@ -5,19 +5,19 @@ public class Payment {
   private int id;
    private Date date;
   private double montanpaye ;
-    private String  paymenttype;
     private  double commission;
     private Facture facture;
 
-    public Payment(int paymentID, Date date, double montanpaye, String paymenttype, double commission) {
+    public Payment(int paymentID, Facture facture, Date date, double montanpaye, double commission) {
         this.id = paymentID;
         this.date = date;
         this.montanpaye = montanpaye;
-        this.paymenttype = paymenttype;
         this.commission = commission;
-
+        this.Facture = facture;
     }
-
+    public static Facture getFacture(){
+        return facture ;
+    }
     public int getId() {
         return id;
     }
@@ -42,13 +42,6 @@ public class Payment {
         this.montanpaye = montanpaye;
     }
 
-    public String getPaymenttype() {
-        return paymenttype;
-    }
-
-    public void setPaymenttype(String paymenttype) {
-        this.paymenttype = paymenttype;
-    }
 
     public double getCommission() {
         return commission;
@@ -58,7 +51,9 @@ public class Payment {
         this.commission = commission;
     }
 
+   public Facture findFacture(int id){
 
+   }
 
 
     @Override

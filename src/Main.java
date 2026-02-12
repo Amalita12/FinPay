@@ -1,5 +1,183 @@
-public class Main {
-    public static void main(String[] args) {
+import java.sql.Date;
+import java.util.Scanner;
 
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        char again = 'y';
+        while (again == 'y' || again == 'Y') {
+            principalMenu();
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+            switch (choice) {
+                case 1 -> gestionFactures();
+                case 2 -> gestionPaiements();
+                case 3 -> gestionPrestataires();
+                case 4 -> gestionHistorique();
+                default -> System.out.println("Invalid choice!");
+            }
+            System.out.println("Retour au menu principal ? y/n");
+            again = sc.next().charAt(0);
+        }
+    }
+
+    public static void principalMenu() {
+        System.out.println("===== Menu Principal FinPay =====");
+        System.out.println("1. Gestion des Factures");
+        System.out.println("2. Gestion des Paiements");
+        System.out.println("3. Gestion des Prestataires");
+        System.out.println("4. Gestion de l’Historique");
+    }
+
+    public static void gestionFactures() {
+        System.out.println("===== Gestion des Factures =====");
+        System.out.println("1. Ajouter Facture");
+        System.out.println("2. Afficher Factures");
+        System.out.println("3. Mettre à jour Statut Facture");
+        System.out.println("4. Supprimer Facture");
+
+        int choice = sc.nextInt(); sc.nextLine();
+        switch (choice) {
+            case 1 -> addFacture();
+            case 2 -> displayFactures();
+            case 3 -> updateFacture();
+            case 4 -> deleteFacture();
+        }
+    }
+
+
+    public static void gestionPaiements() {
+        System.out.println("===== Gestion des Paiements =====");
+        System.out.println("1. Ajouter Paiement");
+        System.out.println("2. Afficher Paiements");
+        System.out.println("3. Mettre à jour Paiement");
+
+        int choice = sc.nextInt(); sc.nextLine();
+        switch (choice) {
+            case 1 -> addPayment();
+            case 2 -> displayPayments();
+            case 3 -> updatePayment();
+        }
+    }
+    public static void gestionPrestataires() {
+        System.out.println("===== Gestion des Prestataires =====");
+        System.out.println("1. Ajouter Prestataire");
+        System.out.println("2. Afficher Prestataires");
+        System.out.println("3. Mettre à jour Prestataire");
+        System.out.println("4. Supprimer Prestataire");
+
+        int choice = sc.nextInt(); sc.nextLine();
+        switch (choice) {
+            case 1 -> addPrestataire();
+            case 2 -> displayPrestataires();
+            case 3 -> updatePrestataire();
+            case 4 -> deletePrestataire();
+        }
+    }
+    public static void gestionHistorique() {
+        System.out.println("===== Gestion de l’Historique =====");
+        System.out.println("1. Ajouter Transaction");
+        System.out.println("2. Afficher Transactions");
+        System.out.println("3. Mettre à jour Transaction");
+        System.out.println("4. Supprimer Transaction");
+
+        int choice = sc.nextInt(); sc.nextLine();
+        switch (choice) {
+            case 1 -> addTransaction();
+            case 2 -> displayTransactions();
+            case 3 -> updateTransaction();
+            case 4 -> deleteTransaction();
+        }
+    }
+    public static void addFacture() {
+        System.out.println("Enter client ID:");
+        int idClient = sc.nextInt();
+        System.out.println("Enter prestataire ID:");
+        int idPrestataire = sc.nextInt();
+        System.out.println("Enter montant:");
+        double montant = sc.nextDouble();
+        sc.nextLine();
+        System.out.println("Enter facture date (yyyy-mm-dd):");
+        String dateStr = sc.nextLine();
+        Date dateFacture = Date.valueOf(dateStr);
+        FactureDAO.addFacture(idClient, idPrestataire, montant, Statut.NON_PAYEE, dateFacture);
+    }
+    public static void displayFactures() { FactureDAO.getAllFactures().forEach(System.out::println); }
+    public static void updateFacture() {
+        System.out.println("Enter facture ID:");
+        int id = sc.nextInt(); sc.nextLine();
+        System.out.println("Enter new statut (NON_PAYEE, PARTIELLE, PAYEE):");
+        String statut = sc.nextLine();
+        FactureDAO.updateFactureStatut(id, Statut.valueOf(statut));
+    }
+    public static void deleteFacture() {
+        System.out.println("Enter facture ID:");
+        int id = sc.nextInt();
+        FactureDAO.deleteFacture(id);
+    }
+    public static void addPayment() {
+        System.out.println("Enter facture ID:");
+        int idFacture = sc.nextInt();
+        System.out.println("Enter montant payé:");
+        double montant = sc.nextDouble();
+        System.out.println("Enter commission:");
+        double commission = sc.nextDouble();
+        PaymentDAO.addPayment(idFacture, montant, commission);
+    }
+    public static void displayPayments() {
+        PaymentDAO.getAllPayments().forEach(System.out::println);
+    }
+    public static void updatePayment() {
+        System.out.println("Enter payment ID:");
+        int id = sc.nextInt();
+        System.out.println("Enter new montant:");
+        double montant = sc.nextDouble();
+        System.out.println("Enter new commission:");
+        double commission = sc.nextDouble();
+        PaymentDAO.updatePayment(id, montant, commission);
+    }
+
+
+
+    public static void addPrestataire() {
+        System.out.println("Enter prestataire name:");
+        String name = sc.nextLine();
+        PrestataireDAO.addPrestataire(name);
+    }
+    public static void displayPrestataires() {
+        PrestataireDAO.getAllPrestataires().forEach(System.out::println);
+    }
+    public static void updatePrestataire() {
+        System.out.println("Enter prestataire ID:");
+        int id = sc.nextInt(); sc.nextLine();
+        System.out.println("Enter new name:");
+        String name = sc.nextLine();
+        PrestataireDAO.updatePrestataire(id, name);
+    }
+    public static void deletePrestataire() {
+        System.out.println("Enter prestataire ID:");
+        int id = sc.nextInt();
+        PrestataireDAO.deletePrestataire(id);
+    }
+
+
+    public static void addTransaction() {
+        System.out.println("Enter type of operation:");
+        String type = sc.nextLine();
+        HistoriqueTransactionDAO.addTransaction(type);
+    }
+    public static void displayTransactions() { HistoriqueTransactionDAO.getAllTransactions().forEach(System.out::println); }
+    public static void updateTransaction() {
+        System.out.println("Enter transaction ID:");
+        int id = sc.nextInt(); sc.nextLine();
+        System.out.println("Enter new type:");
+        String type = sc.nextLine();
+        HistoriqueTransactionDAO.updateTransaction(id, type);
+    }
+    public static void deleteTransaction() {
+        System.out.println("Enter transaction ID:");
+        int id = sc.nextInt();
+        HistoriqueTransactionDAO.deleteTransaction(id);
     }
 }

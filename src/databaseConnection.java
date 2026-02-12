@@ -7,9 +7,9 @@ public class databaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "123454321";
 
-    private Connection connection = null;
+    private static Connection connection = null;
 
-    public void connect() {
+    public static Connection getConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Database connected successfully!");
@@ -17,9 +17,7 @@ public class databaseConnection {
             System.err.println("Connection failed! " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    public Connection getConnection() {
         return connection;
     }
+
 }
