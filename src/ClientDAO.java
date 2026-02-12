@@ -1,76 +1,49 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDAO {
-
-    private int id;
-
-    //Ajouter
-    public void AjouterClient(Client C) throws Exception{
-        Connection conn = DBConnection.getConnection();
-        String sql = "Insert into client values(?,?)";
-        PreparedStatement ps= conn.prepareStatement(sql);
-
-        ps.setInt(1,C.getId());
-        ps.setString(2,C.getName());
-
-        ps.executeUpdate();
-        conn.close();
-
-    }
-    //Afdicher
-    public ArrayList<Client>AffiherClient(int id)throws Exception{
-        Connection conn=DBConnection.getConnection();
-        String sql= "SELECT*FROM Client";
-        PreparedStatement ps= conn.prepareStatement(sql);
-        ResultSet rs= ps.executeQuery();
-
-        ArrayList<Client> Clients=new ArrayList<>();
-
-        while (rs.next()){
-            Clients.add(new Client(
-                    rs.getInt("id"),
-                    rs.getString("Name")
-            ));
-        }
-        Clients.stream().filter(c-> id==c.id)
-                        .forEach(System.out::println);
-//        Clients.forEach(System.out::println);
-        conn.close();
-        return Clients;
+    public static void addClient(String nom) {
+        String sql = "INSERT INTO clients (nom) VALUES (?)";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nom);
+            ps.executeUpdate();
+            System.out.println("Client added successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    //Rechercher
-    public Client RechercherClient(int id) throws Exception{
-        Connection conn =DBConnection.getConnection();
-        String sql="SELECT*FROM CLIENT WHERE id=?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1,id);
-        ResultSet rs=ps.executeQuery();
-        Client client=null;
-
-        if(rs.next()){
-            client=new Client(
-                    rs.getInt("id"),
-                    rs.getString("Name")
-            );
-
-        }
-        conn.close();
-        return client;
+    public static List<Client> getAllClients() {
+        List<Client> clients = new ArrayList<>();
+        String sql = "SELECT FROM clients";
+        try (Connection conn = databaseConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                clients.add(new Client(rs.getInt("id_client"), rs.getString("nom")));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return clients;
     }
 
-//Supprimer
-    public void SupprimerClient(int id)throws Exception{
-        Connection conn=DBConnection.getConnection();
-        String sql="DELET FROM CLIENT WHERE id=?";
-        PreparedStatement ps= conn.prepareStatement(sql);
-
-        ps.setInt(1,id);
-        ps.executeUpdate();
-        conn.close();
+    public static void updateClient(int id, String newName) {
+        String sql = "UPDATE clients SET nom=? WHERE id_client=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newName);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            System.out.println("Client updated successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    public static void deleteClient(int id) {
+        String sql = "DELETE FROM clients WHERE id_client=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("Client deleted successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
 }
