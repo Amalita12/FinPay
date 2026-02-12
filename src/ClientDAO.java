@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDAO {
+
     public static void addClient(String nom) {
         String sql = "INSERT INTO clients (nom) VALUES (?)";
         try (Connection conn = databaseConnection.getConnection();
