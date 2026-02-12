@@ -4,9 +4,8 @@ import java.util.List;
 
 public class PaymentDAO {
 
-    // ✅ CREATE
 
-    public static void AjouterPayment(int idFacture, double montantPaye, double commission) {
+    public static void addPayment(int idFacture, double montantPaye, double commission) {
         String sql = "INSERT INTO paiements (id_facture, montant_paye, commission_finpay) VALUES (?, ?, ?)";
 
         try (Connection connection = databaseConnection.getConnection();
@@ -25,8 +24,7 @@ public class PaymentDAO {
         }
     }
 
-    // ✅ READ
-    public static void displayPayment() {
+    public static void getAllPayments() {
         List<Payment> payments = new ArrayList<>();
         String sql = "SELECT * FROM paiements";
 
@@ -54,7 +52,7 @@ public class PaymentDAO {
         }
     }
 
-    // ✅ UPDATE
+
     public static void updatePayment(int idPaiement, double newMontant, double newCommission) {
         String sql = "UPDATE paiements SET montant_paye = ?, commission_finpay = ? WHERE id_paiement = ?";
 
@@ -74,21 +72,5 @@ public class PaymentDAO {
         }
     }
 
-    // ✅ DELETE / Manage Partial Payments
-    public static void managePartialPayments(int idPaiement) {
-        String sql = "DELETE FROM paiements WHERE id_paiement = ?";
 
-        try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
-            pstmt.setInt(1, idPaiement);
-
-            int rows = pstmt.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Payment deleted successfully!");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error deleting payment: " + e.getMessage());
-        }
-    }
 }
