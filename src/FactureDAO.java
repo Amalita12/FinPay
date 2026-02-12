@@ -1,115 +1,60 @@
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FactureDAO {
-
-    public void addFacture(Facture f) throws Exception{
-        Connection con = DataBase.getConnect();
-        String sql = "INSERT INTO Facture VALUES (?,?,?,?,?,?)";
-        PreparedStatement ps = con.prepareStatement(sql);
-
-        ps.setInt(1,f.getID());
-        ps.setDate(2, (Date) f.getDate());
-        ps.setFloat(3,f.getMontant());
-        ps.setString(4,f.getType().name());
-        ps.setInt(5,f.getPrestataire().getId());
-        ps.setInt(6,f.getClient().getId());
-
-        ps.executeUpdate();
-        con.close();
+    public static void addFacture(int idClient, int idPrestataire, double montant, Statut statut, Date dateFacture) {
+        String sql = "INSERT INTO factures (id_client, id_prestataire, montant_total, statut, date_facture) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idClient);
+            ps.setInt(2, idPrestataire);
+            ps.setDouble(3, montant);
+            ps.setString(4, statut.name());
+            ps.setDate(5, dateFacture);
+            ps.executeUpdate();
+            System.out.println("Facture added successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public void updateFacture(Facture f) throws Exception{
-        Connection con = DataBase.getConnect();
-        String sql = "UPDATE Facture SET  date=?, montant=? , type=? , id_prestataire=? , id_Client=? WHERE id=? ";
-        PreparedStatement ps = con.prepareStatement(sql);
-
-        ps.setDate(1, (Date) f.getDate());
-        ps.setFloat(2,f.getMontant());
-        ps.setString(3,f.getType().name());
-        ps.setInt(4,f.getPrestataire().getId());
-        ps.setInt(5,f.getClient().getId());
-        ps.setInt(6,f.getID());
-
-        ps.executeUpdate();
-        con.close();
+    public static List<Facture> getAllFactures() {
+        List<Facture> factures = new ArrayList<>();
+        String sql = "SELECT * FROM factures";
+        try (Connection conn = databaseConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                factures.add(new Facture(
+                        rs.getInt("id_facture"),
+                        null, null,
+                        rs.getDouble("montant_total"),
+                        Statut.valueOf(rs.getString("statut")),
+                        rs.getDate("date_facture"),
+                        rs.getTimestamp("date_creation")
+                ));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return factures;
     }
 
-    public Facture findFacture(int id) throws Exception{
-        Connection con = DataBase.getConnect();
-        String sql = "SELECT * FROM Ticket WHERE id=?";
-        PreparedStatement ps = con.prepareStatement(sql);
-
-        ps.setInt(1,id);
-        ResultSet rs = ps.executeQuery();
-        System.out.println(rs);
-        Facture facture = null;
-        if (rs.next()){
-            facture = new Facture(
-            rs.getInt("id"),
-            rs.getDate("date"),
-            rs.getFloat("montant"),
-            Facture.status.valueOf(rs.getString("type")),
-            PrestataireDAO.RechercherPrestataire(rs.getInt("id_prestataire")),
-            ClientDAO.RechercherClient(rs.getInt("id_client")));
-//            facture.setID(rs.getInt("id"));
-//            facture.setDate(rs.getDate("date"));
-//            facture.setMontant(rs.getFloat("montant"));
-//            facture.setType(rs.getString("type"));
-//            Prestataire prest = PrestataireDAO.RechercherPrestataire(rs.getInt("id_prestataire"));
-//            facture.setPrestataire(prest);
-//            Client clt = ClientDAO.RechercherClient(rs.getInt("id_client"));
-//            facture.setClient(clt);
-        }
-        rs.close();
-        ps.close();
-        con.close();
-        return facture ;
+    public static void updateFactureStatut(int id, Statut newStatut) {
+        String sql = "UPDATE factures SET statut=? WHERE id_facture=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newStatut.name());
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            System.out.println("Facture statut updated successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-
-//    public Facture findFactur(int id) throws Exception {
-//        Connection conn = DataBase.getConnect();
-//        String sql = "SELECT * FROM Ticket";
-//        PreparedStatement ps = conn.prepareStatement(sql);
-//        ResultSet rs = ps.executeQuery();
-//
-//        List<Facture> Factures = new ArrayList<>();
-//
-//        while (rs.next()) {
-//            Factures.add(new Facture(
-//                    rs.getInt("id"),
-//                    rs.getDate("date"),
-//                    rs.getFloat("montant"),
-//                    rs.getString("type"),
-//                    rs.getObject("id-prestataire"),
-//                    rs.getObject("id-client")
-//            ));
-//        }
-//
-//        Facture fac = Factures.stream().filter(f->id == f.getID())
-//                .findFirst()
-//                .orElse(null);
-//
-//        conn.close();
-//        return fac;
-//    }
-
-    public void SupprimerFacture(int id) throws Exception{
-        Connection con = DataBase.getConnect();
-        String sql = "DELETE FROM FACTURE WHERE id=?";
-        PreparedStatement ps = con.prepareStatement(sql);
-         ps.setInt(1,id);
-         ps.executeUpdate();
-         ps.close();
-         con.close();
+    public static void deleteFacture(int id) {
+        String sql = "DELETE FROM factures WHERE id_facture=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("Facture deleted successfully!");
+        } catch (SQLException e) { e.printStackTrace(); }
     }
-
-
-
-
 }
