@@ -26,8 +26,8 @@ import java.util.List;
             List <Prestataire> prestataires = new ArrayList<>();
             String sql= "SELECT * FROM prestataires";
             try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery())
+                 PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery())
             {
                 while (rs.next()){
                     Prestataire p = new Prestataire(rs.getInt("id_prestataire"), rs.getString("nom"));
