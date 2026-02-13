@@ -1,88 +1,223 @@
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class Main {
-    private static PrestataireDAO prestataireDAO = new PrestataireDAO();
-    private static Scanner scanner = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        // Classe Payment:
-
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            System.out.println("Connexion réussie !");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        char again = 'y';
+        while (again == 'y' || again == 'Y') {
+            principalMenu();
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+            switch (choice) {
+                case 1 -> gestionClients();
+                case 2 -> gestionFactures();
+                case 3 -> gestionPaiements();
+                case 4 -> gestionPrestataires();
+                default -> System.out.println("Invalid choice!");
+            }
+            System.out.println("Retour au menu principal ? y/n");
+            again = sc.next().charAt(0);
         }
     }
 
-    public void updatePayment() {
-        System.out.println("=============================================");
-        System.out.println("                     Update Payment");
-        System.out.println("=============================================");
-
-
-        PaymentDAO.updatePayment();
-    }
-
-    public void managePartialPayments() {
-        System.out.println("=============================================");
-        System.out.println("                     Remove Payment");
-        System.out.println("=============================================");
-
-
-        PaymentDAO.managePartialPayments();
-    }
-
-
-    // classe Prestataire:
-    public static void menuPrestataire() {
-        int choix;
-        do {
-            afficherMenu();
-            choix = scanner.nextInt();
-            traiterChoix(choix);
-
-
-        } while (choix != 0);
-
-
-    }
-
-    private static void afficherMenu() {
-        System.out.println("\n--- GESTION DES PRESTATAIRES ---");
-        System.out.println("1. Ajouter");
-        System.out.println("2. Lister");
-        System.out.println("3. Rechercher");
-        System.out.println("4. Modifier");
-        System.out.println("5. Supprimer");
-        System.out.println("0. Quitter");
-        System.out.print(" votre Choix : ");
-    }
-
-    private static void traiterChoix(int choix) {
-        switch (choix){
-            case 1 -> menuAjouter();
-            case 2 -> menuLister();
-            case 3 -> menuRechercher();
-            case 4 -> menuModifier();
-            case 5 -> menuSupprimer();
-            case 0 -> System.out.println("Au revoir.");
-            default -> System.out.println("Choix invalide! Veuillez réessayer.");
+    public static void gestionClients() {
+        System.out.println("===== Gestion des Clients =====");
+        System.out.println("1. Ajouter Client");
+        System.out.println("2. Afficher Clients");
+        System.out.println("3. Mettre à jour Client");
+        System.out.println("4. Supprimer Client");
+        System.out.println("5. Rechercher Client par ID");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1 -> addClient();
+            case 2 -> displayClients();
+            case 3 -> updateClient();
+            case 4 -> deleteClient();
+            case 5 -> searchClientById();
         }
     }
 
-    private static void menuAjouter(){
-        System.out.println("Nom du nouveau Prestataire: ");
-        String nom = scanner.next();
-        prestataireDAO.save(new Prestataire(0,nom));
-        System.out.println("Prestataire enregistré.");
+    public static void principalMenu() {
+        System.out.println("===== Menu Principal FinPay =====");
+        System.out.println("1. Gestion des Clients");
+        System.out.println("2. Gestion des Factures");
+        System.out.println("3. Gestion des Paiements");
+        System.out.println("4. Gestion des Prestataires");
+        System.out.println("5. Gestion de l’Historique");
     }
-    private static void menuLister(){
 
+    public static void gestionFactures() {
+        System.out.println("===== Gestion des Factures =====");
+        System.out.println("1. Ajouter Facture");
+        System.out.println("2. Afficher Factures");
+        System.out.println("3. Mettre à jour Statut Facture");
+        System.out.println("4. Supprimer Facture");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1 -> addFacture();
+            case 2 -> displayFactures();
+            case 3 -> updateFacture();
+            case 4 -> deleteFacture();
+        }
     }
+
+
+    public static void gestionPaiements() {
+        System.out.println("===== Gestion des Paiements =====");
+        System.out.println("1. Ajouter Paiement");
+        System.out.println("2. Afficher Paiements");
+        System.out.println("3. Mettre à jour Paiement");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1 -> addPayment();
+            case 2 -> displayPayments();
+            case 3 -> updatePayment();
+        }
+    }
+
+    public static void gestionPrestataires() {
+        System.out.println("===== Gestion des Prestataires =====");
+        System.out.println("1. Ajouter Prestataire");
+        System.out.println("2. Afficher Prestataires");
+        System.out.println("3. Mettre à jour Prestataire");
+        System.out.println("4. Supprimer Prestataire");
+        System.out.println("5. Rechercher Prestataire");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1 -> addPrestataire();
+            case 2 -> displayPrestataires();
+            case 3 -> updatePrestataire();
+            case 4 -> deletePrestataire();
+            case 5 -> rechercherPrestataire();
+
+        }
+    }
+       public static void addClient(){
+           System.out.println("Enter client name:");
+           String name = sc.nextLine();
+           ClientDAO.addClient(name);
+       }
+       public static void displayClients(){
+           ClientDAO.getAllClients().forEach(System.out::println);
+       }
+       public static void updateClient() {
+           System.out.println("Enter client ID:");
+           int id = sc.nextInt();
+           sc.nextLine();
+           System.out.println("Enter new name:");
+           String name = sc.nextLine();
+           ClientDAO.updateClient(id, name);
+       }
+       public static void deleteClient(){
+           System.out.println("Enter client ID:");
+           int id = sc.nextInt();
+           ClientDAO.deleteClient(id);
+       }
+       public static void searchClientById(){
+           System.out.println("Enter client ID:");
+           int id = sc.nextInt();
+           Client client = ClientDAO.findClientById(id);
+           System.out.println(client != null ? client : "Client not found.");
+       }
+
+    public static void addFacture() {
+        System.out.println("Enter client ID:");
+        int idClient = sc.nextInt();
+        System.out.println("Enter prestataire ID:");
+        int idPrestataire = sc.nextInt();
+        System.out.println("Enter montant:");
+        double montant = sc.nextDouble();
+        sc.nextLine();
+        System.out.println("Enter facture date (yyyy-mm-dd):");
+        String dateStr = sc.nextLine();
+        Date dateFacture = Date.valueOf(dateStr);
+        FactureDAO.addFacture(idClient, idPrestataire, montant, Statut.NON_PAYEE, dateFacture);
+    }
+
+    public static void displayFactures() {
+        FactureDAO.getAllFactures().forEach(System.out::println);
+    }
+
+    public static void updateFacture() {
+        System.out.println("Enter facture ID:");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter new statut (NON_PAYEE, PARTIELLE, PAYEE):");
+        String statut = sc.nextLine();
+        FactureDAO.updateFactureStatut(id, Statut.valueOf(statut));
+    }
+
+    public static void deleteFacture() {
+        System.out.println("Enter facture ID:");
+        int id = sc.nextInt();
+        FactureDAO.deleteFacture(id);
+    }
+
+    public static void addPayment() {
+        System.out.println("Enter facture ID:");
+        int idFacture = sc.nextInt();
+        System.out.println("Enter montant payé:");
+        double montant = sc.nextDouble();
+        System.out.println("Enter commission:");
+        double commission = sc.nextDouble();
+        PaymentDAO.addPayment(idFacture, montant, commission);
+    }
+
+    public static void displayPayments() {
+        PaymentDAO.getAllPayments();
+    }
+
+    public static void updatePayment() {
+        System.out.println("Enter payment ID:");
+        int id = sc.nextInt();
+        System.out.println("Enter new montant:");
+        double montant = sc.nextDouble();
+        System.out.println("Enter new commission:");
+        double commission = sc.nextDouble();
+        PaymentDAO.updatePayment(id, montant, commission);
+    }
+
+
+    public static void addPrestataire() {
+        System.out.println("Enter prestataire name:");
+        String name = sc.nextLine();
+        PrestataireDAO.save(name);
+    }
+
+    public static void displayPrestataires() {
+        PrestataireDAO.findAll().forEach(System.out::println);
+    }
+
+    public static void updatePrestataire() {
+        System.out.println("Enter prestataire ID:");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter new name:");
+        String name = sc.nextLine();
+        PrestataireDAO.update(id, name);
+    }
+
+    public static void deletePrestataire() {
+        System.out.println("Enter prestataire ID:");
+        int id = sc.nextInt();
+        PrestataireDAO.delete(id);
+    }
+
+    private static void rechercherPrestataire() {
+        System.out.println("Enter prestataire ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        PrestataireDAO.findById(id);
+    }
+
+
 }
-
-
-

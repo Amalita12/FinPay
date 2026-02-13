@@ -5,12 +5,12 @@ import java.util.List;
     public class PrestataireDAO {
 
         // ajouter prestataire
-        public void save(Prestataire prestataire) {
+        public static void save(String name) {
             String sql = "INSERT INTO prestataires (nom) VALUES (?)";
-            try(Connection conn  = DatabaseConnection.getConnection();
+            try(Connection conn  = databaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
             {
-                ps.setString(1,prestataire.getName());
+                ps.setString(1,name);
                 ps.executeUpdate();
                 System.out.println("Prestataire ajouté avec succès!");
 
@@ -21,11 +21,11 @@ import java.util.List;
         }
 
         // lister tous les prestataires
-        public List<Prestataire> findAll() {
+        public static List<Prestataire> findAll() {
 
             List <Prestataire> prestataires = new ArrayList<>();
             String sql= "SELECT * FROM prestataires";
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = databaseConnection.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery())
             {
@@ -42,9 +42,9 @@ import java.util.List;
 
         // rechercher prestataire par id
 
-        public Prestataire findById(int id) {
+        public static Prestataire findById(int id) {
             String sql = "SELECT * FROM prestataires WHERE id_prestataire=?";
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = databaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setInt(1,id);
                 try (ResultSet rs = ps.executeQuery()){
@@ -63,12 +63,12 @@ import java.util.List;
         }
 
         // mettre à jour un prestataire
-        public void update(Prestataire prestataire) {
+        public static void update(int id, String name) {
             String sql = "UPDATE prestataires SET nom = ? WHERE id_prestataire =?";
-            try(Connection conn = DatabaseConnection.getConnection();
+            try(Connection conn = databaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(1, prestataire.getName());
-                ps.setInt(2,prestataire.getId());
+                ps.setString(1,name);
+                ps.setInt(2,id);
                 ps.executeUpdate();
 
 
@@ -79,10 +79,10 @@ import java.util.List;
 
 
         // supprimer un prestataire
-        public void delete(int id) {
+        public static void delete(int id) {
 
             String sql = "DELETE FROM prestataires WHERE id_prestataire=?";
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = databaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setInt(1,id);
                 ps.executeUpdate();
