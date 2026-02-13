@@ -4,10 +4,12 @@ import java.util.List;
 public class Prestataire {
     private int id;
     private String name;
+    private List<Facture> factures;
 
     public Prestataire(int id, String name) {
         this.id = id;
         this.name = name;
+        this.factures = new ArrayList<>();
     }
 
     public int getId() {
@@ -24,6 +26,14 @@ public class Prestataire {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Facture> getFactures() {
+        return factures;
+    }
+
+    public void setFactures(List<Facture> factures) {
+        this.factures = factures;
     }
 
     @Override

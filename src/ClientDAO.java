@@ -47,4 +47,19 @@ public class ClientDAO {
             System.out.println("Client deleted successfully!");
         } catch (SQLException e) { e.printStackTrace(); }
     }
+
+    public static Client findClientById(int id) {
+        String sql = "SELECT * FROM clients WHERE id_client=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) { ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Client(rs.getInt("id_client"),
+                        rs.getString("nom"));
+            }
+        }
+        catch (SQLException e) { e.printStackTrace();
+        }
+        return null;
+    }
 }
