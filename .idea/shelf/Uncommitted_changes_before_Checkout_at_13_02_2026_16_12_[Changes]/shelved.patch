@@ -1,0 +1,134 @@
+Index: src/ClientDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ClientDAO {\r\n\r\n    public static void addClient(String nom) {\r\n        String sql = \"INSERT INTO clients (nom) VALUES (?)\";\r\n        try (Connection conn = databaseConnection.getConnection();\r\n             PreparedStatement ps = conn.prepareStatement(sql)) {\r\n            ps.setString(1, nom);\r\n            ps.executeUpdate();\r\n            System.out.println(\"Client added successfully!\");\r\n        } catch (SQLException e) { e.printStackTrace(); }\r\n    }\r\n\r\n    public static List<Client> getAllClients() {\r\n        List<Client> clients = new ArrayList<>();\r\n        String sql = \"SELECT FROM clients\";\r\n        try (Connection conn = databaseConnection.getConnection();\r\n             Statement st = conn.createStatement();\r\n             ResultSet rs = st.executeQuery(sql)) {\r\n            while (rs.next()) {\r\n                clients.add(new Client(rs.getInt(\"id_client\"), rs.getString(\"nom\")));\r\n            }\r\n        } catch (SQLException e) { e.printStackTrace(); }\r\n        return clients;\r\n    }\r\n\r\n    public static void updateClient(int id, String newName) {\r\n        String sql = \"UPDATE clients SET nom=? WHERE id_client=?\";\r\n        try (Connection conn = databaseConnection.getConnection();\r\n             PreparedStatement ps = conn.prepareStatement(sql)) {\r\n            ps.setString(1, newName);\r\n            ps.setInt(2, id);\r\n            ps.executeUpdate();\r\n            System.out.println(\"Client updated successfully!\");\r\n        } catch (SQLException e) { e.printStackTrace(); }\r\n    }\r\n    public static void deleteClient(int id) {\r\n        String sql = \"DELETE FROM clients WHERE id_client=?\";\r\n        try (Connection conn = databaseConnection.getConnection();\r\n             PreparedStatement ps = conn.prepareStatement(sql)) {\r\n            ps.setInt(1, id);\r\n            ps.executeUpdate();\r\n            System.out.println(\"Client deleted successfully!\");\r\n        } catch (SQLException e) { e.printStackTrace(); }\r\n    }\r\n}
+===================================================================
+diff --git a/src/ClientDAO.java b/src/ClientDAO.java
+--- a/src/ClientDAO.java	(revision 65c8e48b54388f76360f58c766c228d8a79eda0d)
++++ b/src/ClientDAO.java	(date 1770995529150)
+@@ -16,7 +16,7 @@
+ 
+     public static List<Client> getAllClients() {
+         List<Client> clients = new ArrayList<>();
+-        String sql = "SELECT FROM clients";
++        String sql = "SELECT * FROM clients";
+         try (Connection conn = databaseConnection.getConnection();
+              Statement st = conn.createStatement();
+              ResultSet rs = st.executeQuery(sql)) {
+@@ -46,4 +46,19 @@
+             System.out.println("Client deleted successfully!");
+         } catch (SQLException e) { e.printStackTrace(); }
+     }
++
++    public static Client findClientById(int id) {
++        String sql = "SELECT * FROM clients WHERE id_client=?";
++        try (Connection conn = databaseConnection.getConnection();
++             PreparedStatement ps = conn.prepareStatement(sql)) { ps.setInt(1, id);
++            ResultSet rs = ps.executeQuery();
++            if (rs.next()) {
++                return new Client(rs.getInt("id_client"),
++                        rs.getString("nom"));
++            }
++        }
++        catch (SQLException e) { e.printStackTrace();
++        }
++        return null;
++    }
+ }
+\ No newline at end of file
+Index: src/PrestataireDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\n    public class PrestataireDAO {\r\n\r\n        // ajouter prestataire\r\n        public static void save(String name) {\r\n            String sql = \"INSERT INTO prestataires (nom) VALUES (?)\";\r\n            try(Connection conn  = databaseConnection.getConnection();\r\n            PreparedStatement ps = conn.prepareStatement(sql))\r\n            {\r\n                ps.setString(1,prestataire.getName());\r\n                ps.executeUpdate();\r\n                System.out.println(\"Prestataire ajouté avec succès!\");\r\n\r\n            } catch (SQLException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n\r\n        }\r\n\r\n        // lister tous les prestataires\r\n        public List<Prestataire> findAll() {\r\n\r\n            List <Prestataire> prestataires = new ArrayList<>();\r\n            String sql= \"SELECT * FROM prestataires\";\r\n            try (Connection conn = databaseConnection.getConnection();\r\n            PreparedStatement ps = conn.prepareStatement(sql);\r\n            ResultSet rs = ps.executeQuery())\r\n            {\r\n                while (rs.next()){\r\n                    Prestataire p = new Prestataire(rs.getInt(\"id_prestataire\"), rs.getString(\"nom\"));\r\n                    prestataires.add(p);\r\n                }\r\n\r\n            } catch (SQLException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n            return  prestataires;\r\n        }\r\n\r\n        // rechercher prestataire par id\r\n\r\n        public Prestataire findById(int id) {\r\n            String sql = \"SELECT * FROM prestataires WHERE id_prestataire=?\";\r\n            try (Connection conn = databaseConnection.getConnection();\r\n            PreparedStatement ps = conn.prepareStatement(sql)){\r\n                ps.setInt(1,id);\r\n                try (ResultSet rs = ps.executeQuery()){\r\n                    if (rs.next()){\r\n                        return new Prestataire(\r\n                                rs.getInt(\"id_prestataire\"),\r\n                                rs.getString(\"nom\"));\r\n                    }\r\n\r\n                }\r\n\r\n            } catch (SQLException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n            return null;\r\n        }\r\n\r\n        // mettre à jour un prestataire\r\n        public void update(Prestataire prestataire) {\r\n            String sql = \"UPDATE prestataires SET nom = ? WHERE id_prestataire =?\";\r\n            try(Connection conn = databaseConnection.getConnection();\r\n            PreparedStatement ps = conn.prepareStatement(sql)){\r\n                ps.setString(1, prestataire.getName());\r\n                ps.setInt(2,prestataire.getId());\r\n                ps.executeUpdate();\r\n\r\n\r\n            } catch (SQLException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        }\r\n\r\n\r\n        // supprimer un prestataire\r\n        public void delete(int id) {\r\n\r\n            String sql = \"DELETE FROM prestataires WHERE id_prestataire=?\";\r\n            try (Connection conn = databaseConnection.getConnection();\r\n            PreparedStatement ps = conn.prepareStatement(sql)){\r\n                ps.setInt(1,id);\r\n                ps.executeUpdate();\r\n\r\n            } catch (SQLException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        }\r\n    }\r\n\r\n
+===================================================================
+diff --git a/src/PrestataireDAO.java b/src/PrestataireDAO.java
+--- a/src/PrestataireDAO.java	(revision 65c8e48b54388f76360f58c766c228d8a79eda0d)
++++ b/src/PrestataireDAO.java	(date 1770995529150)
+@@ -10,7 +10,7 @@
+             try(Connection conn  = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql))
+             {
+-                ps.setString(1,prestataire.getName());
++                ps.setString(1,name);
+                 ps.executeUpdate();
+                 System.out.println("Prestataire ajouté avec succès!");
+ 
+@@ -21,7 +21,7 @@
+         }
+ 
+         // lister tous les prestataires
+-        public List<Prestataire> findAll() {
++        public static List<Prestataire> findAll() {
+ 
+             List <Prestataire> prestataires = new ArrayList<>();
+             String sql= "SELECT * FROM prestataires";
+@@ -42,7 +42,7 @@
+ 
+         // rechercher prestataire par id
+ 
+-        public Prestataire findById(int id) {
++        public static Prestataire findById(int id) {
+             String sql = "SELECT * FROM prestataires WHERE id_prestataire=?";
+             try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+@@ -63,12 +63,12 @@
+         }
+ 
+         // mettre à jour un prestataire
+-        public void update(Prestataire prestataire) {
++        public static void update(int id , String name) {
+             String sql = "UPDATE prestataires SET nom = ? WHERE id_prestataire =?";
+             try(Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+-                ps.setString(1, prestataire.getName());
+-                ps.setInt(2,prestataire.getId());
++                ps.setString(1,name);
++                ps.setInt(2,id);
+                 ps.executeUpdate();
+ 
+ 
+@@ -79,7 +79,7 @@
+ 
+ 
+         // supprimer un prestataire
+-        public void delete(int id) {
++        public static void delete(int id) {
+ 
+             String sql = "DELETE FROM prestataires WHERE id_prestataire=?";
+             try (Connection conn = databaseConnection.getConnection();
+Index: src/Prestataire.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Prestataire {\r\n    private int id;\r\n    private String name;\r\n\r\n    public Prestataire(int id, String name) {\r\n        this.id = id;\r\n        this.name = name;\r\n    }\r\n\r\n    public int getId() {\r\n        return id;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setId(int id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Prestataire{\" +\r\n                \"id=\" + id +\r\n                \", name='\" + name + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/Prestataire.java b/src/Prestataire.java
+--- a/src/Prestataire.java	(revision 65c8e48b54388f76360f58c766c228d8a79eda0d)
++++ b/src/Prestataire.java	(date 1770995529150)
+@@ -4,10 +4,12 @@
+ public class Prestataire {
+     private int id;
+     private String name;
++    private List<Facture> factures;
+ 
+     public Prestataire(int id, String name) {
+         this.id = id;
+         this.name = name;
++        this.factures = new ArrayList<>();
+     }
+ 
+     public int getId() {
+@@ -26,6 +28,14 @@
+         this.name = name;
+     }
+ 
++    public List<Facture> getFactures() {
++        return factures;
++    }
++
++    public void setFactures(List<Facture> factures) {
++        this.factures = factures;
++    }
++
+     @Override
+     public String toString() {
+         return "Prestataire{" +

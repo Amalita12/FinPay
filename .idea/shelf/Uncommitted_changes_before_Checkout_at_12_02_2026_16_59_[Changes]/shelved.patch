@@ -1,0 +1,494 @@
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 41f0ccbf3b160ba7b6324091d64d0d32d8e79317)
++++ /dev/null	(revision 41f0ccbf3b160ba7b6324091d64d0d32d8e79317)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1770911549218)
++++ b/.idea/modules.xml	(date 1770911549218)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/FinPay.iml" filepath="$PROJECT_DIR$/FinPay.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Main{\r\n    public static void main (String[] args){\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision 41f0ccbf3b160ba7b6324091d64d0d32d8e79317)
++++ b/src/Main.java	(date 1770911549222)
+@@ -1,5 +1,183 @@
+-public class Main{
+-    public static void main (String[] args){
++import java.sql.Date;
++import java.util.Scanner;
++
++public class Main {
++    static Scanner sc = new Scanner(System.in);
++
++    public static void main(String[] args) {
++        char again = 'y';
++        while (again == 'y' || again == 'Y') {
++            principalMenu();
++            int choice = sc.nextInt();
++            sc.nextLine(); // consume newline
++            switch (choice) {
++                case 1 -> gestionFactures();
++                case 2 -> gestionPaiements();
++                case 3 -> gestionPrestataires();
++                case 4 -> gestionHistorique();
++                default -> System.out.println("Invalid choice!");
++            }
++            System.out.println("Retour au menu principal ? y/n");
++            again = sc.next().charAt(0);
++        }
++    }
++
++    public static void principalMenu() {
++        System.out.println("===== Menu Principal FinPay =====");
++        System.out.println("1. Gestion des Factures");
++        System.out.println("2. Gestion des Paiements");
++        System.out.println("3. Gestion des Prestataires");
++        System.out.println("4. Gestion de l’Historique");
++    }
++
++    public static void gestionFactures() {
++        System.out.println("===== Gestion des Factures =====");
++        System.out.println("1. Ajouter Facture");
++        System.out.println("2. Afficher Factures");
++        System.out.println("3. Mettre à jour Statut Facture");
++        System.out.println("4. Supprimer Facture");
++
++        int choice = sc.nextInt(); sc.nextLine();
++        switch (choice) {
++            case 1 -> addFacture();
++            case 2 -> displayFactures();
++            case 3 -> updateFacture();
++            case 4 -> deleteFacture();
++        }
++    }
++
++
++    public static void gestionPaiements() {
++        System.out.println("===== Gestion des Paiements =====");
++        System.out.println("1. Ajouter Paiement");
++        System.out.println("2. Afficher Paiements");
++        System.out.println("3. Mettre à jour Paiement");
++
++        int choice = sc.nextInt(); sc.nextLine();
++        switch (choice) {
++            case 1 -> addPayment();
++            case 2 -> displayPayments();
++            case 3 -> updatePayment();
++        }
++    }
++    public static void gestionPrestataires() {
++        System.out.println("===== Gestion des Prestataires =====");
++        System.out.println("1. Ajouter Prestataire");
++        System.out.println("2. Afficher Prestataires");
++        System.out.println("3. Mettre à jour Prestataire");
++        System.out.println("4. Supprimer Prestataire");
++
++        int choice = sc.nextInt(); sc.nextLine();
++        switch (choice) {
++            case 1 -> addPrestataire();
++            case 2 -> displayPrestataires();
++            case 3 -> updatePrestataire();
++            case 4 -> deletePrestataire();
++        }
++    }
++    public static void gestionHistorique() {
++        System.out.println("===== Gestion de l’Historique =====");
++        System.out.println("1. Ajouter Transaction");
++        System.out.println("2. Afficher Transactions");
++        System.out.println("3. Mettre à jour Transaction");
++        System.out.println("4. Supprimer Transaction");
++
++        int choice = sc.nextInt(); sc.nextLine();
++        switch (choice) {
++            case 1 -> addTransaction();
++            case 2 -> displayTransactions();
++            case 3 -> updateTransaction();
++            case 4 -> deleteTransaction();
++        }
++    }
++    public static void addFacture() {
++        System.out.println("Enter client ID:");
++        int idClient = sc.nextInt();
++        System.out.println("Enter prestataire ID:");
++        int idPrestataire = sc.nextInt();
++        System.out.println("Enter montant:");
++        double montant = sc.nextDouble();
++        sc.nextLine();
++        System.out.println("Enter facture date (yyyy-mm-dd):");
++        String dateStr = sc.nextLine();
++        Date dateFacture = Date.valueOf(dateStr);
++        FactureDAO.addFacture(idClient, idPrestataire, montant, Statut.NON_PAYEE, dateFacture);
++    }
++    public static void displayFactures() { FactureDAO.getAllFactures().forEach(System.out::println); }
++    public static void updateFacture() {
++        System.out.println("Enter facture ID:");
++        int id = sc.nextInt(); sc.nextLine();
++        System.out.println("Enter new statut (NON_PAYEE, PARTIELLE, PAYEE):");
++        String statut = sc.nextLine();
++        FactureDAO.updateFactureStatut(id, Statut.valueOf(statut));
++    }
++    public static void deleteFacture() {
++        System.out.println("Enter facture ID:");
++        int id = sc.nextInt();
++        FactureDAO.deleteFacture(id);
++    }
++    public static void addPayment() {
++        System.out.println("Enter facture ID:");
++        int idFacture = sc.nextInt();
++        System.out.println("Enter montant payé:");
++        double montant = sc.nextDouble();
++        System.out.println("Enter commission:");
++        double commission = sc.nextDouble();
++        PaymentDAO.addPayment(idFacture, montant, commission);
++    }
++    public static void displayPayments() {
++        PaymentDAO.getAllPayments().forEach(System.out::println);
++    }
++    public static void updatePayment() {
++        System.out.println("Enter payment ID:");
++        int id = sc.nextInt();
++        System.out.println("Enter new montant:");
++        double montant = sc.nextDouble();
++        System.out.println("Enter new commission:");
++        double commission = sc.nextDouble();
++        PaymentDAO.updatePayment(id, montant, commission);
++    }
++
++
+ 
++    public static void addPrestataire() {
++        System.out.println("Enter prestataire name:");
++        String name = sc.nextLine();
++        PrestataireDAO.addPrestataire(name);
++    }
++    public static void displayPrestataires() {
++        PrestataireDAO.getAllPrestataires().forEach(System.out::println);
++    }
++    public static void updatePrestataire() {
++        System.out.println("Enter prestataire ID:");
++        int id = sc.nextInt(); sc.nextLine();
++        System.out.println("Enter new name:");
++        String name = sc.nextLine();
++        PrestataireDAO.updatePrestataire(id, name);
++    }
++    public static void deletePrestataire() {
++        System.out.println("Enter prestataire ID:");
++        int id = sc.nextInt();
++        PrestataireDAO.deletePrestataire(id);
++    }
++
++
++    public static void addTransaction() {
++        System.out.println("Enter type of operation:");
++        String type = sc.nextLine();
++        HistoriqueTransactionDAO.addTransaction(type);
++    }
++    public static void displayTransactions() { HistoriqueTransactionDAO.getAllTransactions().forEach(System.out::println); }
++    public static void updateTransaction() {
++        System.out.println("Enter transaction ID:");
++        int id = sc.nextInt(); sc.nextLine();
++        System.out.println("Enter new type:");
++        String type = sc.nextLine();
++        HistoriqueTransactionDAO.updateTransaction(id, type);
++    }
++    public static void deleteTransaction() {
++        System.out.println("Enter transaction ID:");
++        int id = sc.nextInt();
++        HistoriqueTransactionDAO.deleteTransaction(id);
+     }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+new file mode 100644
+--- /dev/null	(date 1770911627416)
++++ b/.idea/workspace.xml	(date 1770911627416)
+@@ -0,0 +1,34 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="d54713fb-ffcb-4216-a809-5aa337f44221" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/FinPay.iml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/Payment.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/PaymentDAO.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "git-widget-placeholder": "main"
++  }
++}]]></component>
++  <component name="TaskManager">
++    <servers />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" default=\"true\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 41f0ccbf3b160ba7b6324091d64d0d32d8e79317)
++++ b/.idea/misc.xml	(date 1770911549218)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" default="true">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/PaymentDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/PaymentDAO.java b/src/PaymentDAO.java
+new file mode 100644
+--- /dev/null	(date 1770911549225)
++++ b/src/PaymentDAO.java	(date 1770911549225)
+@@ -0,0 +1,76 @@
++import java.sql.*;
++import java.util.ArrayList;
++import java.util.List;
++
++public class PaymentDAO {
++
++
++    public static void addPayment(int idFacture, double montantPaye, double commission) {
++        String sql = "INSERT INTO paiements (id_facture, montant_paye, commission_finpay) VALUES (?, ?, ?)";
++
++        try (Connection connection = databaseConnection.getConnection();
++             PreparedStatement pstmt = connection.prepareStatement(sql)) {
++
++            pstmt.setInt(1, idFacture);
++            pstmt.setDouble(2, montantPaye);
++            pstmt.setDouble(3, commission);
++
++            int rows = pstmt.executeUpdate();
++            if (rows > 0) {
++                System.out.println("Payment added successfully!");
++            }
++        } catch (SQLException e) {
++            System.err.println("Error adding payment: " + e.getMessage());
++        }
++    }
++
++    public static void getAllPayments() {
++        List<Payment> payments = new ArrayList<>();
++        String sql = "SELECT * FROM paiements";
++
++        try (Connection connection = databaseConnection.getConnection();
++             Statement stm = connection.createStatement();
++             ResultSet resultSet = stm.executeQuery(sql)) {
++
++            while (resultSet.next()) {
++                int id_paiement = resultSet.getInt("id_paiement");
++                int id_facture = resultSet.getInt("id_facture");
++                double montant_paye = resultSet.getDouble("montant_paye");
++                double commission_finpay = resultSet.getDouble("commission_finpay");
++                Timestamp date_paiement = resultSet.getTimestamp("date_paiement");
++
++                // Here you could fetch Facture details if needed
++                Payment payment = new Payment(id_paiement, null, date_paiement, montant_paye, commission_finpay);
++                payments.add(payment);
++            }
++        } catch (SQLException e) {
++            System.err.println("Error displaying payments: " + e.getMessage());
++        }
++
++        for (Payment p : payments) {
++            System.out.println(p);
++        }
++    }
++
++
++    public static void updatePayment(int idPaiement, double newMontant, double newCommission) {
++        String sql = "UPDATE paiements SET montant_paye = ?, commission_finpay = ? WHERE id_paiement = ?";
++
++        try (Connection connection = databaseConnection.getConnection();
++             PreparedStatement pstmt = connection.prepareStatement(sql)) {
++
++            pstmt.setDouble(1, newMontant);
++            pstmt.setDouble(2, newCommission);
++            pstmt.setInt(3, idPaiement);
++
++            int rows = pstmt.executeUpdate();
++            if (rows > 0) {
++                System.out.println("Payment updated successfully!");
++            }
++        } catch (SQLException e) {
++            System.err.println("Error updating payment: " + e.getMessage());
++        }
++    }
++
++
++}
+Index: FinPay.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/FinPay.iml b/FinPay.iml
+new file mode 100644
+--- /dev/null	(date 1770911549222)
++++ b/FinPay.iml	(date 1770911549222)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
++    </content>
++    <content url="jar://$USER_HOME$/Documents/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0/mysql-connector-j-9.5.0.jar!/" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1770911549218)
++++ b/.idea/vcs.xml	(date 1770911549218)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/Payment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Payment.java b/src/Payment.java
+new file mode 100644
+--- /dev/null	(date 1770911549225)
++++ b/src/Payment.java	(date 1770911549225)
+@@ -0,0 +1,69 @@
++import java.util.Date;
++
++public class Payment {
++
++  private int id;
++   private Date date;
++  private double montanpaye ;
++    private  double commission;
++    private Facture facture;
++
++    public Payment(int paymentID, Facture facture, Date date, double montanpaye, double commission) {
++        this.id = paymentID;
++        this.date = date;
++        this.montanpaye = montanpaye;
++        this.commission = commission;
++        this.Facture = facture;
++    }
++    public static Facture getFacture(){
++        return facture ;
++    }
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    public Date getDate() {
++        return date;
++    }
++
++    public void setDate(Date date) {
++        this.date = date;
++    }
++
++    public double getMontanpaye() {
++        return montanpaye;
++    }
++
++    public void setMontanpaye(double montanpaye) {
++        this.montanpaye = montanpaye;
++    }
++
++
++    public double getCommission() {
++        return commission;
++    }
++
++    public void setCommission(double commission) {
++        this.commission = commission;
++    }
++
++   public Facture findFacture(int id){
++
++   }
++
++
++    @Override
++    public String toString() {
++        return "Payment{" +
++                "paymentID=" + id +
++                ", date=" + date +
++                ", montanpaye=" + montanpaye +
++                ", paymenttype='" + paymenttype + '\'' +
++                ", commission=" + commission +
++                '}';
++    }
++}
