@@ -13,11 +13,13 @@ public class Payment {
         this.date = date;
         this.montanpaye = montanpaye;
         this.commission = commission;
-        this.Facture = facture;
+        this.facture = facture;
     }
-    public static Facture getFacture(){
-        return facture ;
+
+    public Facture getFacture() {
+        return facture;
     }
+
     public int getId() {
         return id;
     }
@@ -51,10 +53,6 @@ public class Payment {
         this.commission = commission;
     }
 
-   public Facture findFacture(int id){
-
-   }
-
 
     @Override
     public String toString() {
@@ -62,7 +60,6 @@ public class Payment {
                 "paymentID=" + id +
                 ", date=" + date +
                 ", montanpaye=" + montanpaye +
-                ", paymenttype='" + paymenttype + '\'' +
                 ", commission=" + commission +
                 '}';
     }

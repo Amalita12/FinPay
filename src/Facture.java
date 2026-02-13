@@ -21,6 +21,62 @@ public class Facture {
         this.dateCreation = dateCreation;
     }
 
+    public int getIdFacture() {
+        return idFacture;
+    }
+
+    public void setIdFacture(int idFacture) {
+        this.idFacture = idFacture;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Prestataire getPrestataire() {
+        return prestataire;
+    }
+
+    public void setPrestataire(Prestataire prestataire) {
+        this.prestataire = prestataire;
+    }
+
+    public double getMontantTotal() {
+        return montantTotal;
+    }
+
+    public void setMontantTotal(double montantTotal) {
+        this.montantTotal = montantTotal;
+    }
+
+    public Statut getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
+    }
+
+    public Date getDateFacture() {
+        return dateFacture;
+    }
+
+    public void setDateFacture(Date dateFacture) {
+        this.dateFacture = dateFacture;
+    }
+
+    public Timestamp getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Timestamp dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
     @Override
     public String toString() {
         return "Facture{id=" + idFacture + ", client=" + client +

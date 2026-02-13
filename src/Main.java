@@ -15,13 +15,20 @@ public class Main {
                 case 2 -> gestionFactures();
                 case 3 -> gestionPaiements();
                 case 4 -> gestionPrestataires();
+                case 5 -> Historique();
                 default -> System.out.println("Invalid choice!");
             }
             System.out.println("Retour au menu principal ? y/n");
             again = sc.next().charAt(0);
         }
     }
-
+    private static void Historique() {
+        System.out.println("       ===== Historique =====");
+        System.out.println("\tTotal payments: " + PaymentDAO.getTotalMontantPaye());
+        System.out.println("\tTotal commission: " + PaymentDAO.getTotalCommission());
+        System.out.println("\tTotal facture payee: " + FactureDAO.getTotalFacturesPayee());
+        System.out.println("\tTotal facture non-payee: " + FactureDAO.getTotalFacturesNonPayee());
+    }
     public static void gestionClients() {
         System.out.println("===== Gestion des Clients =====");
         System.out.println("1. Ajouter Client");
@@ -39,22 +46,21 @@ public class Main {
             case 5 -> searchClientById();
         }
     }
-
     public static void principalMenu() {
         System.out.println("===== Menu Principal FinPay =====");
         System.out.println("1. Gestion des Clients");
         System.out.println("2. Gestion des Factures");
         System.out.println("3. Gestion des Paiements");
         System.out.println("4. Gestion des Prestataires");
-        System.out.println("5. Gestion de l’Historique");
+        System.out.println("5. Affichage de l'Historique");
     }
-
     public static void gestionFactures() {
         System.out.println("===== Gestion des Factures =====");
         System.out.println("1. Ajouter Facture");
         System.out.println("2. Afficher Factures");
         System.out.println("3. Mettre à jour Statut Facture");
         System.out.println("4. Supprimer Facture");
+        System.out.println("5. Rechercher Factures par Statut");
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -63,10 +69,14 @@ public class Main {
             case 2 -> displayFactures();
             case 3 -> updateFacture();
             case 4 -> deleteFacture();
+            case 5 -> searchFacturesByStatut();
         }
     }
-
-
+    private static void searchFacturesByStatut() {
+        System.out.println("Enter statut (NON_PAYEE, PARTIELLE, PAYEE):");
+        String statut = sc.nextLine();
+        FactureDAO.searchFacturesByStatut(statut);
+    }
     public static void gestionPaiements() {
         System.out.println("===== Gestion des Paiements =====");
         System.out.println("1. Ajouter Paiement");
@@ -81,7 +91,6 @@ public class Main {
             case 3 -> updatePayment();
         }
     }
-
     public static void gestionPrestataires() {
         System.out.println("===== Gestion des Prestataires =====");
         System.out.println("1. Ajouter Prestataire");
@@ -101,15 +110,15 @@ public class Main {
 
         }
     }
-       public static void addClient(){
+    public static void addClient(){
            System.out.println("Enter client name:");
            String name = sc.nextLine();
            ClientDAO.addClient(name);
        }
-       public static void displayClients(){
-           ClientDAO.getAllClients().forEach(System.out::println);
+    public static void displayClients(){
+           ClientDAO.getAllClients();
        }
-       public static void updateClient() {
+    public static void updateClient() {
            System.out.println("Enter client ID:");
            int id = sc.nextInt();
            sc.nextLine();
@@ -117,18 +126,16 @@ public class Main {
            String name = sc.nextLine();
            ClientDAO.updateClient(id, name);
        }
-       public static void deleteClient(){
+    public static void deleteClient(){
            System.out.println("Enter client ID:");
            int id = sc.nextInt();
            ClientDAO.deleteClient(id);
        }
-       public static void searchClientById(){
+    public static void searchClientById(){
            System.out.println("Enter client ID:");
            int id = sc.nextInt();
-           Client client = ClientDAO.findClientById(id);
-           System.out.println(client != null ? client : "Client not found.");
+           ClientDAO.findClientById(id);
        }
-
     public static void addFacture() {
         System.out.println("Enter client ID:");
         int idClient = sc.nextInt();
@@ -142,11 +149,9 @@ public class Main {
         Date dateFacture = Date.valueOf(dateStr);
         FactureDAO.addFacture(idClient, idPrestataire, montant, Statut.NON_PAYEE, dateFacture);
     }
-
     public static void displayFactures() {
-        FactureDAO.getAllFactures().forEach(System.out::println);
+        FactureDAO.getAllFactures();
     }
-
     public static void updateFacture() {
         System.out.println("Enter facture ID:");
         int id = sc.nextInt();
@@ -155,13 +160,11 @@ public class Main {
         String statut = sc.nextLine();
         FactureDAO.updateFactureStatut(id, Statut.valueOf(statut));
     }
-
     public static void deleteFacture() {
         System.out.println("Enter facture ID:");
         int id = sc.nextInt();
         FactureDAO.deleteFacture(id);
     }
-
     public static void addPayment() {
         System.out.println("Enter facture ID:");
         int idFacture = sc.nextInt();
@@ -171,11 +174,9 @@ public class Main {
         double commission = sc.nextDouble();
         PaymentDAO.addPayment(idFacture, montant, commission);
     }
-
     public static void displayPayments() {
         PaymentDAO.getAllPayments();
     }
-
     public static void updatePayment() {
         System.out.println("Enter payment ID:");
         int id = sc.nextInt();
@@ -185,18 +186,14 @@ public class Main {
         double commission = sc.nextDouble();
         PaymentDAO.updatePayment(id, montant, commission);
     }
-
-
     public static void addPrestataire() {
         System.out.println("Enter prestataire name:");
         String name = sc.nextLine();
         PrestataireDAO.save(name);
     }
-
     public static void displayPrestataires() {
-        PrestataireDAO.findAll().forEach(System.out::println);
+        PrestataireDAO.findAll();
     }
-
     public static void updatePrestataire() {
         System.out.println("Enter prestataire ID:");
         int id = sc.nextInt();
@@ -205,19 +202,16 @@ public class Main {
         String name = sc.nextLine();
         PrestataireDAO.update(id, name);
     }
-
     public static void deletePrestataire() {
         System.out.println("Enter prestataire ID:");
         int id = sc.nextInt();
         PrestataireDAO.delete(id);
     }
-
     private static void rechercherPrestataire() {
         System.out.println("Enter prestataire ID: ");
         int id = sc.nextInt();
         sc.nextLine();
         PrestataireDAO.findById(id);
     }
-
 
 }

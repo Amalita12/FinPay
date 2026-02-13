@@ -38,17 +38,22 @@ public class PaymentDAO {
                 double montant_paye = resultSet.getDouble("montant_paye");
                 double commission_finpay = resultSet.getDouble("commission_finpay");
                 Timestamp date_paiement = resultSet.getTimestamp("date_paiement");
-
-                // Here you could fetch Facture details if needed
-                Payment payment = new Payment(id_paiement, null, date_paiement, montant_paye, commission_finpay);
+               Facture facture =  FactureDAO.findFactureById(id_facture);
+                Payment payment = new Payment(id_paiement, facture, date_paiement, montant_paye, commission_finpay);
                 payments.add(payment);
             }
         } catch (SQLException e) {
             System.err.println("Error displaying payments: " + e.getMessage());
         }
 
-        for (Payment p : payments) {
-            System.out.println(p);
+
+            System.out.println("=========All Payments========= \n");
+            for(Payment p: payments){
+                System.out.println("Payment id: " + p.getId() );
+                System.out.println("Amount operation: " + p.getMontanpaye());
+                System.out.println("Date operation: " + p.getDate());
+                System.out.println("Commission= "+p.getCommission());
+                System.out.println("-----------------------------------------");
         }
     }
 
@@ -70,6 +75,34 @@ public class PaymentDAO {
         } catch (SQLException e) {
             System.err.println("Error updating payment: " + e.getMessage());
         }
+    }
+
+    public static double getTotalMontantPaye() {
+        String sql = "SELECT SUM(montant_paye) AS total FROM paiements";
+        try (Connection conn = databaseConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public static double getTotalCommission() {
+        String sql = "SELECT SUM(commission_finpay) AS total FROM paiements";
+        try (Connection conn = databaseConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
     }
 
 
