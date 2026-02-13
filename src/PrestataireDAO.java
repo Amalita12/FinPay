@@ -12,8 +12,7 @@ import java.util.List;
             {
                 ps.setString(1,name);
                 ps.executeUpdate();
-                System.out.println("Prestataire ajouté avec succès!");
-
+                findByName(name);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -21,7 +20,7 @@ import java.util.List;
         }
 
         // lister tous les prestataires
-        public static List<Prestataire> findAll() {
+        public static void findAll() {
 
             List <Prestataire> prestataires = new ArrayList<>();
             String sql= "SELECT * FROM prestataires";
@@ -37,29 +36,47 @@ import java.util.List;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return  prestataires;
+            System.out.println("=========All Prestataires========= \n");
+            for(Prestataire p: prestataires){
+                System.out.println("Prestataire id: " + p.getId());
+                System.out.println("Prestataire name: " + p.getName());
+                System.out.println("-----------------------------------------");
         }
+            }
 
         // rechercher prestataire par id
 
-        public static Prestataire findById(int id) {
+        public static void findById(int id) {
             String sql = "SELECT * FROM prestataires WHERE id_prestataire=?";
             try (Connection conn = databaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setInt(1,id);
-                try (ResultSet rs = ps.executeQuery()){
-                    if (rs.next()){
-                        return new Prestataire(
-                                rs.getInt("id_prestataire"),
-                                rs.getString("nom"));
-                    }
-
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    System.out.println("=============Prestataire=============");
+                    System.out.println( "prestataire id: " + rs.getInt("id_prestataire"));
+                    System.out.println( "prestataire name: "+ rs.getString("nom"));
                 }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
-            return null;
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        public static void findByName(String name) {
+            String sql = "SELECT * FROM prestataires WHERE nom=?";
+            try (Connection conn = databaseConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, name);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    System.out.println("=============Prestataire added =============");
+                    System.out.println( "prestataire id: " + rs.getInt("id_prestataire"));
+                    System.out.println( "prestataire name: "+ rs.getString("nom"));
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         // mettre à jour un prestataire

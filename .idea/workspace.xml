@@ -5,25 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d54713fb-ffcb-4216-a809-5aa337f44221" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/databaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_4_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FinPay.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FinPay.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Facture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Facture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactureDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactureDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PaymentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaymentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PrestataireDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PrestataireDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/databaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/databaseConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Amalita12/FinPay.git",
+    "accountId": "6f24d962-8647-4413-abbc-ad17e26553ce"
+  }
 }]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="39WFWJcS6lv1A2FnYJSjdBcy8S3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,11 +53,12 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature-Pay",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "feature-Prestataire",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
 }]]></component>
