@@ -45,18 +45,21 @@ public class PaymentDAO {
     private static void GenerationDunRecuDePaiement(int idPayment, int idFacture, Timestamp date, double montanPaye, double resteAPayer) {
         try {
             Document document = new Document(PageSize.A4);
-            PdfWriter.getInstance(document, new FileOutputStream("recupaiementID_" + idPayment + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("recupaiementID.pdf"));
             document.open();
          Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
          Paragraph title = new Paragraph("Reçu de Paiement", titleFont);
          title.setAlignment(Element.ALIGN_CENTER); document.add(title); document.add(new Paragraph(" "));
          Font normalFont = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
-         document.add(new Paragraph("Numéro du paiement : " + idPayment, normalFont));
-         document.add(new Paragraph("Numéro de la facture : " + idFacture, normalFont));
-         document.add(new Paragraph("Date du paiement : " + date.toString(), normalFont));
-         document.add(new Paragraph("Montant payé : " + montanPaye + " MAD", normalFont));
-         document.add(new Paragraph("Reste à payer : " + resteAPayer + " MAD", normalFont));
+         document.add(new Paragraph("\t\tNuméro du paiement : " + idPayment, normalFont));
+         document.add(new Paragraph("\t\tNuméro de la facture : " + idFacture, normalFont));
+         document.add(new Paragraph("\t\tDate du paiement : " + date.toString(), normalFont));
+         document.add(new Paragraph("\t\tMontant payé : " + montanPaye + " MAD", normalFont));
+         document.add(new Paragraph("\t\tReste à payer : " + resteAPayer + " MAD", normalFont));
+         document.add(new Paragraph(" "));
 
+         document.close();
+         System.out.println("Done! recupaiementID_" + idPayment + ".pdf created.");
         } catch (Exception e) {
             e.printStackTrace();
         }
