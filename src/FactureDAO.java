@@ -120,6 +120,7 @@ public class FactureDAO {
         }
         return null;
     }
+
     public static double getTotalFacturesPayee() {
         String sql = "SELECT SUM(montant_total) AS total FROM factures WHERE statut='PAYEE'";
         try (Connection conn = databaseConnection.getConnection();

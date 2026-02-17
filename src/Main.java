@@ -1,8 +1,12 @@
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.io.*;
 import java.sql.Date;
 import java.util.Scanner;
 
 public class Main {
     static Scanner sc = new Scanner(System.in);
+
 
     public static void main(String[] args) {
         char again = 'y';
@@ -22,8 +26,9 @@ public class Main {
             again = sc.next().charAt(0);
         }
     }
+
     private static void Historique() {
-        System.out.println("       ===== Historique =====");
+        System.out.println("===== Historique =====");
         System.out.println("\tTotal payments: " + PaymentDAO.getTotalMontantPaye());
         System.out.println("\tTotal commission: " + PaymentDAO.getTotalCommission());
         System.out.println("\tTotal facture payee: " + FactureDAO.getTotalFacturesPayee());
@@ -33,9 +38,9 @@ public class Main {
         System.out.println("===== Gestion des Clients =====");
         System.out.println("1. Ajouter Client");
         System.out.println("2. Afficher Clients");
-        System.out.println("3. Mettre à jour Client");
+        System.out.println("3. Metre à jour Client");
         System.out.println("4. Supprimer Client");
-        System.out.println("5. Rechercher Client par ID");
+        System.out.println("5. Recherche Client par ID");
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
@@ -170,8 +175,7 @@ public class Main {
         int idFacture = sc.nextInt();
         System.out.println("Enter montant payé:");
         double montant = sc.nextDouble();
-        System.out.println("Enter commission:");
-        double commission = sc.nextDouble();
+        double commission = montant * 0.02;
         PaymentDAO.addPayment(idFacture, montant, commission);
     }
     public static void displayPayments() {

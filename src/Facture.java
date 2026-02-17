@@ -5,7 +5,7 @@ public class Facture {
     private int idFacture;
     private Client client;
     private Prestataire prestataire;
-    private double montantTotal;
+    private static double montantTotal;
     private Statut statut;
     private Date dateFacture;
     private Timestamp dateCreation;
@@ -45,7 +45,7 @@ public class Facture {
         this.prestataire = prestataire;
     }
 
-    public double getMontantTotal() {
+    public static double getMontantTotal() {
         return montantTotal;
     }
 

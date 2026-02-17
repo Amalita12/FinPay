@@ -19,7 +19,6 @@ import java.util.List;
 
         }
 
-        // lister tous les prestataires
         public static void findAll() {
 
             List <Prestataire> prestataires = new ArrayList<>();
