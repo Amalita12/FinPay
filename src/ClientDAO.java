@@ -61,7 +61,8 @@ public class  ClientDAO {
     public static void findClientById(int id) {
         String sql = "SELECT * FROM clients WHERE id_client=?";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) { ps.setInt(1, id);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 System.out.println("=============Client=============");
@@ -72,7 +73,8 @@ public class  ClientDAO {
                 System.out.println("Client not found");
             }
         }
-        catch (SQLException e) { e.printStackTrace();
+        catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }  public static void findClientByName(String name) {

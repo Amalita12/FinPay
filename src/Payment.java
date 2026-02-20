@@ -1,10 +1,9 @@
 import java.util.Date;
 
 public class Payment {
-
   private int id;
-   private Date date;
-  private double montanpaye ;
+   private static Date date;
+  private double montanpaye;
     private  double commission;
     private Facture facture;
 
@@ -15,45 +14,35 @@ public class Payment {
         this.commission = commission;
         this.facture = facture;
     }
-
     public Facture getFacture() {
         return facture;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public Date getDate() {
+    public static Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
     }
-
     public double getMontanpaye() {
         return montanpaye;
     }
-
     public void setMontanpaye(double montanpaye) {
         this.montanpaye = montanpaye;
     }
-
-
     public double getCommission() {
         return commission;
     }
-
     public void setCommission(double commission) {
         this.commission = commission;
     }
-
-
     @Override
     public String toString() {
         return "Payment{" +

@@ -1,9 +1,13 @@
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.io.*;
 import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static Scanner sc = new Scanner(System.in);
+
 
     public static void main(String[] args) {
         char again = 'y';
@@ -23,8 +27,9 @@ public class Main {
             again = sc.next().charAt(0);
         }
     }
+
     private static void Historique() {
-        System.out.println("       ===== Historique =====");
+        System.out.println("===== Historique =====");
         System.out.println("\tTotal payments: " + PaymentDAO.getTotalMontantPaye());
         System.out.println("\tTotal commission: " + PaymentDAO.getTotalCommission());
         System.out.println("\tTotal facture payee: " + FactureDAO.getTotalFacturesPayee());
@@ -34,9 +39,9 @@ public class Main {
         System.out.println("===== Gestion des Clients =====");
         System.out.println("1. Ajouter Client");
         System.out.println("2. Afficher Clients");
-        System.out.println("3. Mettre à jour Client");
+        System.out.println("3. Metre à jour Client");
         System.out.println("4. Supprimer Client");
-        System.out.println("5. Rechercher Client par ID");
+        System.out.println("5. Recherche Client par ID");
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
@@ -89,14 +94,19 @@ public class Main {
         System.out.println("2. Afficher Paiements");
         System.out.println("3. Mettre à jour Paiement");
 
+
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
             case 1 -> addPayment();
             case 2 -> displayPayments();
             case 3 -> updatePayment();
+
         }
     }
+
+
+
     public static void gestionPrestataires() {
         System.out.println("===== Gestion des Prestataires =====");
         System.out.println("1. Ajouter Prestataire");
@@ -104,6 +114,7 @@ public class Main {
         System.out.println("3. Mettre à jour Prestataire");
         System.out.println("4. Supprimer Prestataire");
         System.out.println("5. Rechercher Prestataire");
+        System.out.println("6. Exporter Factures (EXCEL)");
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -113,6 +124,7 @@ public class Main {
             case 3 -> updatePrestataire();
             case 4 -> deletePrestataire();
             case 5 -> rechercherPrestataire();
+            case 6 -> extraireExcelPrestataire();
 
         }
     }
@@ -176,8 +188,7 @@ public class Main {
         int idFacture = sc.nextInt();
         System.out.println("Enter montant payé:");
         double montant = sc.nextDouble();
-        System.out.println("Enter commission:");
-        double commission = sc.nextDouble();
+        double commission = montant * 0.02;
         PaymentDAO.addPayment(idFacture, montant, commission);
     }
     public static void displayPayments() {
@@ -189,8 +200,7 @@ public class Main {
         int id = sc.nextInt();
         System.out.println("Enter new montant:");
         double montant = sc.nextDouble();
-        System.out.println("Enter new commission:");
-        double commission = sc.nextDouble();
+        double commission = montant * 0.02;
         PaymentDAO.updatePayment(id, montant, commission);
     }
     public static void addPrestataire() {
@@ -219,6 +229,11 @@ public class Main {
         int id = sc.nextInt();
         sc.nextLine();
         PrestataireDAO.findById(id);
+    }
+    public static void extraireExcelPrestataire() {
+        System.out.println("entrez l'id du Prestataire pour l'export:");
+        int id = sc.nextInt();
+        PrestataireDAO.genererExcelPrestataire(id);
     }
 
 }
