@@ -2,7 +2,8 @@
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.*;
-import java.sql.*;
+import java.sql.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -69,6 +70,8 @@ public class Main {
         System.out.println("4. Supprimer Facture");
         System.out.println("5. Rechercher Factures par Statut");
         System.out.println("6. Generer un Fichier PDF d'une Facture");
+        System.out.println("7. Export des Factures Impayées");
+
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -190,6 +193,7 @@ public class Main {
         PaymentDAO.addPayment(idFacture, montant, commission);
     }
     public static void displayPayments() {
+
         PaymentDAO.getAllPayments();
     }
     public static void updatePayment() {

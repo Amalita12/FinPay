@@ -24,9 +24,12 @@ public class FactureDAO {
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
+                int clientId = rs.getInt("id_client"); // récupère l’ID du client
+                Client client = ClientDAO.getClientById(clientId); // récupère l’objet Client depuis DAO
+
                 factures.add(new Facture(
                         rs.getInt("id_facture"),
-                        null, null,
+                        client, null,
                         rs.getDouble("montant_total"),
                         Statut.valueOf(rs.getString("statut")),
                         rs.getDate("date_facture"),
