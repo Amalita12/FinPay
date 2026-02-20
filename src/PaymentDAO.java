@@ -104,6 +104,4 @@ public class PaymentDAO {
         }
         return 0.0;
     }
-
-
 }
