@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAO {
+public class  ClientDAO {
 
     public static void addClient(String nom) {
         String sql = "INSERT INTO clients (nom) VALUES (?)";
@@ -94,6 +94,23 @@ public class ClientDAO {
         catch (SQLException e) { e.printStackTrace();
         }
 
+    }
+    public static Client getClientById(int id) {
+        String sql = "SELECT * FROM clients WHERE id_client=?";
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Client(
+                        rs.getInt("id_client"),
+                        rs.getString("nom")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

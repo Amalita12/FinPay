@@ -17,16 +17,19 @@ public class FactureDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public static void getAllFactures() {
+    public static List<Facture> getAllFactures() {
         List<Facture> factures = new ArrayList<>();
         String sql = "SELECT * FROM factures";
         try (Connection conn = databaseConnection.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
+                int clientId = rs.getInt("id_client"); // récupère l’ID du client
+                Client client = ClientDAO.getClientById(clientId); // récupère l’objet Client depuis DAO
+
                 factures.add(new Facture(
                         rs.getInt("id_facture"),
-                        null, null,
+                        client, null,
                         rs.getDouble("montant_total"),
                         Statut.valueOf(rs.getString("statut")),
                         rs.getDate("date_facture"),
@@ -45,6 +48,7 @@ public class FactureDAO {
             System.out.println("Status Payment: " + f.getStatut());
             System.out.println("-----------------------------------------");
         }
+        return factures;
     }
 
     public static void updateFactureStatut(int id, Statut newStatut) {
