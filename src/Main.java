@@ -88,14 +88,19 @@ public class Main {
         System.out.println("2. Afficher Paiements");
         System.out.println("3. Mettre à jour Paiement");
 
+
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
             case 1 -> addPayment();
             case 2 -> displayPayments();
             case 3 -> updatePayment();
+
         }
     }
+
+
+
     public static void gestionPrestataires() {
         System.out.println("===== Gestion des Prestataires =====");
         System.out.println("1. Ajouter Prestataire");
@@ -103,6 +108,7 @@ public class Main {
         System.out.println("3. Mettre à jour Prestataire");
         System.out.println("4. Supprimer Prestataire");
         System.out.println("5. Rechercher Prestataire");
+        System.out.println("6. Exporter Factures (EXCEL)");
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -112,6 +118,7 @@ public class Main {
             case 3 -> updatePrestataire();
             case 4 -> deletePrestataire();
             case 5 -> rechercherPrestataire();
+            case 6 -> extraireExcelPrestataire();
 
         }
     }
@@ -215,6 +222,11 @@ public class Main {
         int id = sc.nextInt();
         sc.nextLine();
         PrestataireDAO.findById(id);
+    }
+    public static void extraireExcelPrestataire() {
+        System.out.println("entrez l'id du Prestataire pour l'export:");
+        int id = sc.nextInt();
+        PrestataireDAO.genererExcelPrestataire(id);
     }
 
 }
