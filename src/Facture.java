@@ -20,7 +20,7 @@ public class Facture {
         this.dateFacture = dateFacture;
         this.dateCreation = dateCreation;
     }
-
+    
     public int getIdFacture() {
         return idFacture;
     }
@@ -76,7 +76,6 @@ public class Facture {
     public void setDateCreation(Timestamp dateCreation) {
         this.dateCreation = dateCreation;
     }
-
     @Override
     public String toString() {
         return "Facture{id=" + idFacture + ", client=" + client +

@@ -48,7 +48,7 @@ public class FactureDAO {
             System.out.println("Status Payment: " + f.getStatut());
             System.out.println("-----------------------------------------");
         }
-        return factures;
+    return factures;    
     }
 
     public static void updateFactureStatut(int id, Statut newStatut) {
@@ -83,7 +83,9 @@ public class FactureDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 factures.add(new Facture(
-                        rs.getInt("id_facture"), null, null,
+                        rs.getInt("id_facture"),                        
+                        ClientDAO.findClientById(rs.getInt("id_client")),
+                        PrestataireDAO.findById(rs.getInt("id_prestataire")),
                         rs.getDouble("montant_total"),
                         Statut.valueOf(rs.getString("statut")),
                         rs.getDate("date_facture"),
@@ -111,8 +113,8 @@ public class FactureDAO {
             if (rs.next()) {
                 return new Facture(
                         rs.getInt("id_facture"),
-                        null,
-                        null,
+                        ClientDAO.findClientById(rs.getInt("id_client")),
+                        PrestataireDAO.findById(rs.getInt("id_prestataire")),
                         rs.getDouble("montant_total"),
                         Statut.valueOf(rs.getString("statut")),
                         rs.getDate("date_facture"),
@@ -152,5 +154,4 @@ public class FactureDAO {
         }
         return 0.0;
     }
-
 }
