@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.itextpdf.text.*;
@@ -25,13 +26,8 @@ public class PaymentDAO {
                     if (resultSet.next()) {
                         int idPayment = resultSet.getInt(1);
                         Facture facture = FactureDAO.findFactureById(idFacture);
-
-
                         double resteAPayer = facture.getMontantTotal() - montantPaye;
-
-
-                        Timestamp datePaiement = new Timestamp(System.currentTimeMillis());
-
+                        Date datePaiement = facture.getDateFacture();
                         System.out.println("Payment added successfully!");
                         GenerationDunRecuDePaiement(idPayment, idFacture, datePaiement, montantPaye, resteAPayer);
                     }
@@ -42,10 +38,10 @@ public class PaymentDAO {
         }
     }
 
-    private static void GenerationDunRecuDePaiement(int idPayment, int idFacture, Timestamp date, double montanPaye, double resteAPayer) {
+    private static void GenerationDunRecuDePaiement(int idPayment, int idFacture, Date date, double montanPaye, double resteAPayer) {
         try {
             Document document = new Document(PageSize.A4);
-            PdfWriter.getInstance(document, new FileOutputStream("recupaiementID.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("recupaiementID"+ idPayment +".pdf"));
             document.open();
          Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
          Paragraph title = new Paragraph("Reçu de Paiement", titleFont);
@@ -146,7 +142,6 @@ public class PaymentDAO {
                 }
                 return 0.0;
             }
-
 
         }
 

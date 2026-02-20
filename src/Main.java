@@ -186,8 +186,7 @@ public class Main {
         int id = sc.nextInt();
         System.out.println("Enter new montant:");
         double montant = sc.nextDouble();
-        System.out.println("Enter new commission:");
-        double commission = sc.nextDouble();
+        double commission = montant * 0.02;
         PaymentDAO.updatePayment(id, montant, commission);
     }
     public static void addPrestataire() {
