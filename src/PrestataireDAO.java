@@ -115,7 +115,6 @@ import java.util.List;
         }
 
         public static void genererExcelPrestataire(int id) {
-            System.out.println("DEBUG: Je demande les factures pour le prestataire ID = " + id); // LIGNE DE TEST
             String fileName = "facturesprestatairemois.xlsx";
 
             String sql = "SELECT f.id_facture, f.date_facture, c.nom AS client_nom, f.montant_total, f.statut " +
@@ -145,7 +144,6 @@ import java.util.List;
                 double totalEnAttente = 0;
 
                 while (rs.next()) {
-                    System.out.println("Ligne trouvée : Facture n°" + rs.getInt("id_facture") + " pour prestataire ID = " + id);
                     Row row = sheet.createRow(rowIdx++);
 
                     row.createCell(0).setCellValue(rs.getInt("id_facture"));
