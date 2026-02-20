@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="36ab4beb-243d-4bc2-a61a-f60e3d5d84bc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Client.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/ClientDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Facture.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/FactureDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Payment.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/PaymentDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Prestataire.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/PrestataireDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Statut.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/databaseConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_4_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FinPay SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/FinPay SQL.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FinPay.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PrestataireDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PrestataireDAO.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Merging feature-Pay"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>
