@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -61,6 +62,8 @@ public class Main {
         System.out.println("3. Mettre à jour Statut Facture");
         System.out.println("4. Supprimer Facture");
         System.out.println("5. Rechercher Factures par Statut");
+        System.out.println("6. Export des Factures Impayées");
+
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -70,6 +73,9 @@ public class Main {
             case 3 -> updateFacture();
             case 4 -> deleteFacture();
             case 5 -> searchFacturesByStatut();
+            case 6 -> { List<Facture> listfactures = FactureDAO.getAllFactures();
+                FactureImpayée.execute(listfactures);}
+
         }
     }
     private static void searchFacturesByStatut() {
@@ -175,6 +181,7 @@ public class Main {
         PaymentDAO.addPayment(idFacture, montant, commission);
     }
     public static void displayPayments() {
+
         PaymentDAO.getAllPayments();
     }
     public static void updatePayment() {
