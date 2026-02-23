@@ -24,7 +24,6 @@ import java.util.List;
 
         }
 
-        // lister tous les prestataires
         public static void findAll() {
 
             List <Prestataire> prestataires = new ArrayList<>();
@@ -108,7 +107,7 @@ import java.util.List;
             PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setInt(1,id);
                 ps.executeUpdate();
-
+                System.out.println("prestataire supprimé.");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
