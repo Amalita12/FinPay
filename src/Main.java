@@ -1,14 +1,17 @@
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.*;
-import java.sql.Date;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
     static Scanner sc = new Scanner(System.in);
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         char again = 'y';
         while (again == 'y' || again == 'Y') {
             principalMenu();
@@ -20,6 +23,7 @@ public class Main {
                 case 3 -> gestionPaiements();
                 case 4 -> gestionPrestataires();
                 case 5 -> Historique();
+                case 6 -> rapportMois();
                 default -> System.out.println("Invalid choice!");
             }
             System.out.println("Retour au menu principal ? y/n");
@@ -58,6 +62,7 @@ public class Main {
         System.out.println("3. Gestion des Paiements");
         System.out.println("4. Gestion des Prestataires");
         System.out.println("5. Affichage de l'Historique");
+        System.out.println("6. Generer un Rapport Excel Monsuel ");
     }
     public static void gestionFactures() {
         System.out.println("===== Gestion des Factures =====");
@@ -66,6 +71,8 @@ public class Main {
         System.out.println("3. Mettre à jour Statut Facture");
         System.out.println("4. Supprimer Facture");
         System.out.println("5. Rechercher Factures par Statut");
+        System.out.println("6. Generer un PDF Facture ");
+        System.out.println("7. Generer les Facture impayees");
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -75,6 +82,9 @@ public class Main {
             case 3 -> updateFacture();
             case 4 -> deleteFacture();
             case 5 -> searchFacturesByStatut();
+            case 6 -> FactureDAO.facturePDF(sc);
+            case 7 -> FactureDAO.execute();
+
         }
     }
     private static void searchFacturesByStatut() {
@@ -227,6 +237,72 @@ public class Main {
         System.out.println("entrez l'id du Prestataire pour l'export:");
         int id = sc.nextInt();
         PrestataireDAO.genererExcelPrestataire(id);
+    }
+    public static void rapportMois() {
+        String sql = "SELECT DATE_FORMAT(f.date_facture, '%Y-%m') AS mois, " +
+                "p.nom AS Prestataire, " +
+                "COUNT(f.id_facture) AS Nombre_Factures, " +
+                "SUM(f.montant_total) AS Total_Généré, " +
+                "SUM(f.montant_total) * 0.02 AS Total_Commissions " +
+                "FROM prestataires p " +
+                "JOIN factures f ON f.id_prestataire = p.id_prestataire " +
+                "GROUP BY DATE_FORMAT(f.date_facture, '%Y-%m'), p.nom, p.id_prestataire " +
+                "ORDER BY mois;";
+
+        try (Connection conn = databaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            String currentMonth = "";
+            Workbook workbook = null;
+            Sheet sheet = null;
+            int rowNumber = 0;
+
+            while (rs.next()) {
+                String mois = rs.getString("mois");
+
+                if (!mois.equals(currentMonth)) {
+
+                    if (workbook != null) {
+                        String oldFileName = "rapport_" + currentMonth + ".xlsx";
+                        try (FileOutputStream fileOut = new FileOutputStream(oldFileName)) {
+                            workbook.write(fileOut);
+                        }
+                        workbook.close();
+                    }
+
+                    currentMonth = mois;
+                    workbook = new XSSFWorkbook();
+                    sheet = workbook.createSheet("Rapport " + mois);
+                    rowNumber = 0;
+
+                    String[] headers = {"Prestataire", "Nombre Factures", "Total Généré", "Total Commissions"};
+                    Row headerRow = sheet.createRow(rowNumber++);
+                    for (int i = 0; i < headers.length; i++) {
+                        headerRow.createCell(i).setCellValue(headers[i]);
+                    }
+                }
+
+                Row row = sheet.createRow(rowNumber++);
+                row.createCell(0).setCellValue(rs.getString("Prestataire"));
+                row.createCell(1).setCellValue(rs.getInt("Nombre_Factures"));
+                row.createCell(2).setCellValue(rs.getDouble("Total_Généré"));
+                row.createCell(3).setCellValue(rs.getDouble("Total_Commissions"));
+            }
+
+            if (workbook != null) {
+                String fileName = "rapport_" + currentMonth + ".xlsx";
+                try (FileOutputStream fileOut = new FileOutputStream(fileName)) {
+                    workbook.write(fileOut);
+                }
+                workbook.close();
+            }
+
+            System.out.println("Rapports générés avec succès.");
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

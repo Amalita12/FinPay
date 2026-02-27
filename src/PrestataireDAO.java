@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +115,8 @@ import java.util.List;
         }
 
         public static void genererExcelPrestataire(int id) {
-            String fileName = "facturesprestatairemois.xlsx";
+            String moisActuel = LocalDate.now().getMonth().toString();
+            String fileName = "facture_p"+id+"_"+moisActuel+".xlsx";
 
             String sql = "SELECT f.id_facture, f.date_facture, c.nom AS client_nom, f.montant_total, f.statut " +
                     "FROM factures f " +

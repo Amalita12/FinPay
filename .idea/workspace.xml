@@ -4,31 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36ab4beb-243d-4bc2-a61a-f60e3d5d84bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Client.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ClientDAO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Facture.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/FactureDAO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Payment.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/PaymentDAO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Prestataire.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/PrestataireDAO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Statut.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/databaseConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FinPay SQL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/FinPay SQL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FinPay.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientDAO.java" afterDir="false" />
+    <list default="true" id="27d8ba70-ea90-4ec8-a7c8-dd2c4c43a281" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_02_2026_16_59_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_02_2026_16_59_[Changes]2/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_02_2026_16_59__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_02_2026_16_59__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_2026_16_12_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_2026_16_12_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_2026_16_13_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_2026_16_13_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactureDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactureDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PaymentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PaymentDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PrestataireDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PrestataireDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Facture.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Facture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FactureDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FactureDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Payment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Payment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PaymentDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PaymentDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PrestataireDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PrestataireDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/databaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/databaseConnection.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,14 +36,67 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="39w6xdF8I6JZ7dmMaFVTZjNHXOT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Merging feature-Pay"
+    "Application.Main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/enaa/Desktop/FinPay",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="FinPayProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28539.33" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28539.33" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="27d8ba70-ea90-4ec8-a7c8-dd2c4c43a281" name="Changes" comment="" />
+      <created>1771595034242</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771595034242</updated>
+      <workItem from="1772102599308" duration="418000" />
+      <workItem from="1772103177714" duration="11997000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
